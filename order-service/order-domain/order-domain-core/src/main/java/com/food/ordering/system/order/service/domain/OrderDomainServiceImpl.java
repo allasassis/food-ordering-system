@@ -24,30 +24,28 @@ public class OrderDomainServiceImpl implements OrderDomainService {
         setOrderProductInformation(order, restaurant);
         order.validateOrder();
         order.initializeOrder();
-        log.info("Order with id: {} is initiated", order.getId().getValue());
+        log.info("Order with id: {} has been initialized", order.getId().getValue());
         return new OrderCreatedEvent(order, ZonedDateTime.now(ZoneId.of(UTC)));
     }
 
     @Override
     public OrderPaidEvent payOrder(Order order) {
         order.pay();
-        log.info("Order with id: {} is paid", order.getId().getValue());
+        log.info("Order with id: {} has been paid", order.getId().getValue());
         return new OrderPaidEvent(order, ZonedDateTime.now(ZoneId.of(UTC)));
     }
 
     @Override
     public OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages) {
         order.initCancel(failureMessages);
-        log.info("Order payment is cancelling for order with id: {}", order.getId().getValue());
+        log.info("Order payment is being cancelled for order with id: {}", order.getId().getValue());
         return new OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of(UTC)));
     }
 
-    // Approve and cancel methods are one of the last methods in the event, and after the approval I don't need fire any events because we're using a HTTP client
-    // Postman. If we had a client consumer, we could implement a new event here to advise the client.
     @Override
     public void approveOrder(Order order) {
         order.approve();
-        log.info("Order with id: {} is approved", order.getId().getValue());
+        log.info("Order with id: {} has been approved", order.getId().getValue());
     }
 
     @Override

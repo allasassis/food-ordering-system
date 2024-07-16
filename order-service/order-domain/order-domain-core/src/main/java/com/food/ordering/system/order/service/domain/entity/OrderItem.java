@@ -15,10 +15,15 @@ public class OrderItem extends BaseEntity<OrderItemId> {
 
     private OrderItem(Builder builder) {
         super.setId(builder.id);
+        orderId = builder.orderId;
         product = builder.product;
         quantity = builder.quantity;
         price = builder.price;
         subTotal = builder.subTotal;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     void initializeOrderItem(OrderId orderId, OrderItemId orderItemId) {
@@ -52,24 +57,42 @@ public class OrderItem extends BaseEntity<OrderItemId> {
 
     public static final class Builder {
         private OrderItemId id;
-        private final Product product;
-        private final int quantity;
-        private final Money price;
-        private final Money subTotal;
+        private OrderId orderId;
+        private Product product;
+        private int quantity;
+        private Money price;
+        private Money subTotal;
 
-        private Builder(Product product, int quantity, Money price, Money subTotal) {
-            this.product = product;
-            this.quantity = quantity;
-            this.price = price;
-            this.subTotal = subTotal;
-        }
-
-        public static Builder builder(Product product, int quantity, Money price, Money subTotal) {
-            return new Builder(product, quantity, price, subTotal);
+        private Builder() {
         }
 
         public Builder id(OrderItemId val) {
             id = val;
+            return this;
+        }
+
+        public Builder orderId(OrderId val) {
+            orderId = val;
+            return this;
+        }
+
+        public Builder product(Product val) {
+            product = val;
+            return this;
+        }
+
+        public Builder quantity(int val) {
+            quantity = val;
+            return this;
+        }
+
+        public Builder price(Money val) {
+            price = val;
+            return this;
+        }
+
+        public Builder subTotal(Money val) {
+            subTotal = val;
             return this;
         }
 
